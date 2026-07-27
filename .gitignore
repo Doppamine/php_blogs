@@ -1,0 +1,11 @@
+var/*
+!var/.gitkeep
+!var/templates_c/.gitkeep
+!var/cache/.gitkeep
+/vendor/
+/node_modules/
+.env
+public/uploads/*
+!public/uploads/.gitkeep
+.DS_Store
+.idea/
