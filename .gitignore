@@ -1,7 +1,7 @@
-var/*
-!var/.gitkeep
-!var/templates_c/.gitkeep
-!var/cache/.gitkeep
+/var/cache/*
+/var/templates_c/*
+/public/uploads/*
+!.gitkeep
 /vendor/
 /node_modules/
 .env
