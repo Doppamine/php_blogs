@@ -17,11 +17,11 @@ CREATE TABLE articles (
     description TEXT NOT NULL ,
     content MEDIUMTEXT NOT NULL,
     image VARCHAR(255) NOT NULL,
-    views_count INT UNSIGNED DEFAULT 0,
+    views_count INT UNSIGNED NOT NULL DEFAULT 0,
     published_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
-    INDEX idx_views_count (views_count),
+    INDEX idx_articles_views_count (views_count),
     INDEX idx_articles_published (published_at)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
@@ -30,6 +30,7 @@ CREATE TABLE article_category (
     article_id INT UNSIGNED NOT NULL,
     category_id INT UNSIGNED NOT NULL,
     PRIMARY KEY (article_id, category_id),
+    INDEX idx_article_category_category_article (category_id, article_id),
     CONSTRAINT fk_article_category_article
         FOREIGN KEY (article_id) REFERENCES articles(id) ON DELETE CASCADE,
     CONSTRAINT fk_article_category_category
