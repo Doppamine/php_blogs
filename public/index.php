@@ -18,5 +18,7 @@ try {
     echo $e->getMessage();
 } catch (Throwable $e) {
     http_response_code(500);
-    echo $e->getMessage();
+    if ($config['debug']) {
+        echo '<pre>' . htmlspecialchars($e->getMessage()) . '</pre>';
+    }
 }

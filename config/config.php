@@ -12,4 +12,5 @@ return [
     'articles_per_page'   => 9,
     'similar_articles'    => 3,
     'latest_per_category' => 3,
+    'debug' => ($_ENV['APP_ENV'] ?? 'production') === 'local',
 ];
