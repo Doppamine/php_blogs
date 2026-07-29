@@ -9,9 +9,7 @@ return [
         'password' => $_ENV['DB_PASSWORD'] ?? '',
         'charset' => 'utf8mb4',
     ],
-    'pagination' => [
-        'per_page' => 9,
-    ],
-    'similar_articles'     => 3,
+    'articles_per_page'   => 9,
+    'similar_articles'    => 3,
     'latest_per_category' => 3,
 ];
