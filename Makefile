@@ -28,4 +28,4 @@ schema: # Recreate database schema from scratch
 		mysql -u"$(DB_USER)" "$(DB_NAME)" < database/schema.sql
 
 seed: # Seed database with initial fake data
-	docker compose exec php php bin/console db:seed
+	docker compose exec php php bin/console.php db:seed

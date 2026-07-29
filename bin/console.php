@@ -18,7 +18,7 @@ $commands = [
 $name = $argv[1] ?? null;
 
 if ($name === null || !isset($commands[$name])) {
-    fwrite(STDERR, 'Usage: bin/console <command>' . PHP_EOL . PHP_EOL . 'Available commands:' . PHP_EOL);
+    fwrite(STDERR, 'Usage: bin/console.php <command>' . PHP_EOL . PHP_EOL . 'Available commands:' . PHP_EOL);
 
     foreach (array_keys($commands) as $command) {
         fwrite(STDERR, ' '. $command . PHP_EOL);
