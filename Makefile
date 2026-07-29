@@ -1,3 +1,5 @@
+-include .env
+export
 .PHONY: up down build ps logs sh composer-install
 
 up: # Start containers
@@ -20,3 +22,10 @@ sh: # Open bash inside PHP container
 
 composer-install: # Install composer dependencies
 	docker compose exec php composer install
+
+schema: # Recreate database schema from scratch
+	docker compose exec -T -e MYSQL_PWD="$(DB_PASSWORD)" mysql \
+		mysql -u"$(DB_USER)" "$(DB_NAME)" < database/schema.sql
+
+seed: # Seed database with initial fake data
+	docker compose exec php php bin/console db:seed
