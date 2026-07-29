@@ -1,6 +1,6 @@
 -include .env
 export
-.PHONY: up down build ps logs sh composer-install
+.PHONY: up down build ps logs sh composer-install schema seed assets
 
 up: # Start containers
 	docker compose up -d
@@ -29,3 +29,6 @@ schema: # Recreate database schema from scratch
 
 seed: # Seed database with initial fake data
 	docker compose exec php php bin/console.php db:seed
+
+assets: # Build assets (CSS, JS, etc.)
+	docker compose exec php php bin/console.php assets:build

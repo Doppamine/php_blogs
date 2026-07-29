@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Commands\BuildAssetsCommand;
 use App\Commands\SeedCommand;
 use App\Core\Database;
 
@@ -13,7 +14,13 @@ $commands = [
         $seedCommand = new SeedCommand($pdo);
         return $seedCommand->run();
     },
-];
+    'assets:build' => static function () {
+        $entry = __DIR__ . '/../resources/scss/app.scss';
+        $output = __DIR__ . '/../public/assets/css/app.css';
+        $buildAssetsCommand = new BuildAssetsCommand($entry, $output);
+        return $buildAssetsCommand->run();
+    },
+    ];
 
 $name = $argv[1] ?? null;
 

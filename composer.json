@@ -26,6 +26,7 @@
     "optimize-autoloader": true
   },
   "require-dev": {
-    "fakerphp/faker": "^1.24"
+    "fakerphp/faker": "^1.24",
+    "scssphp/scssphp": "^2.1"
   }
 }
