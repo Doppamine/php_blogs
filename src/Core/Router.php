@@ -1,5 +1,7 @@
 <?php
+
 declare(strict_types=1);
+
 namespace App\Core;
 
 class Router
@@ -7,14 +9,17 @@ class Router
     private array $routes = [];
 
     // This project will only have GET requests
-    public function get(string $pattern, callable $handler): void {
+    public function get(string $pattern, callable $handler): void
+    {
         $this->routes[] = [
-            'method'  => 'GET',
-            'regex'   => '#^' . str_replace('\{id\}', '(\d+)', preg_quote($pattern, '#')) . '$#',
+            'method' => 'GET',
+            'regex' => '#^'.str_replace('\{id\}', '(\d+)', preg_quote($pattern, '#')).'$#',
             'handler' => $handler,
         ];
     }
-    public function dispatch(string $method, string $path): string {
+
+    public function dispatch(string $method, string $path): string
+    {
         $path = rtrim($path, '/');
         if ($path === '') {
             $path = '/';

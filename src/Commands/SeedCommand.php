@@ -1,8 +1,11 @@
 <?php
+
 declare(strict_types=1);
+
 namespace App\Commands;
-use Faker\Generator;
+
 use Faker\Factory;
+use Faker\Generator;
 use PDO;
 use Throwable;
 
@@ -60,16 +63,16 @@ class SeedCommand
         $ids = [];
         foreach (self::CATEGORIES as [$name, $description]) {
             $insert->execute(['name' => $name, 'description' => $description]);
-            $ids[$name] = (int) $this->pdo->lastInsertId();
+            $ids[$name] = (int)$this->pdo->lastInsertId();
         }
         return $ids;
-
     }
 
     /**
      * @throws Throwable
      */
-    private function seedArticles(array $categoryIds): void{
+    private function seedArticles(array $categoryIds): void
+    {
         $insertArticle = $this->pdo->prepare(
             'INSERT INTO articles (title, description, content, image, views_count, published_at)
              VALUES (:title, :description, :content, :image, :views_count, :published_at)'
@@ -92,7 +95,7 @@ class SeedCommand
                 ]);
 
 
-                $articleId = (int) $this->pdo->lastInsertId();
+                $articleId = (int)$this->pdo->lastInsertId();
                 foreach ($picked as $name) {
                     $insertLink->execute(['article_id' => $articleId, 'category_id' => $categoryIds[$name]]);
                 }

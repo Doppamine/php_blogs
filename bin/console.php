@@ -6,7 +6,7 @@ use App\Commands\BuildAssetsCommand;
 use App\Commands\SeedCommand;
 use App\Core\Database;
 
-$config = require __DIR__ . '/../bootstrap.php';
+$config = require __DIR__.'/../bootstrap.php';
 
 $commands = [
     'db:seed' => static function () use ($config) {
@@ -15,29 +15,28 @@ $commands = [
         return $seedCommand->run();
     },
     'assets:build' => static function () {
-        $entry = __DIR__ . '/../resources/scss/app.scss';
-        $output = __DIR__ . '/../public/assets/css/app.css';
+        $entry = __DIR__.'/../resources/scss/app.scss';
+        $output = __DIR__.'/../public/assets/css/app.css';
         $buildAssetsCommand = new BuildAssetsCommand($entry, $output);
         return $buildAssetsCommand->run();
     },
-    ];
+];
 
 $name = $argv[1] ?? null;
 
 if ($name === null || !isset($commands[$name])) {
-    fwrite(STDERR, 'Usage: bin/console.php <command>' . PHP_EOL . PHP_EOL . 'Available commands:' . PHP_EOL);
+    fwrite(STDERR, 'Usage: bin/console.php <command>'.PHP_EOL.PHP_EOL.'Available commands:'.PHP_EOL);
 
     foreach (array_keys($commands) as $command) {
-        fwrite(STDERR, ' '. $command . PHP_EOL);
+        fwrite(STDERR, ' '.$command.PHP_EOL);
     }
     exit(1);
 }
 
 
-
 try {
     exit($commands[$name]());
 } catch (Throwable $e) {
-    fwrite(STDERR, 'Error: ' . $e->getMessage() . PHP_EOL);
+    fwrite(STDERR, 'Error: '.$e->getMessage().PHP_EOL);
     exit(1);
 }

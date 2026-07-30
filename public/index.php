@@ -1,14 +1,23 @@
 <?php
-declare(strict_types=1);
-use App\Core\Router;
-use App\Core\NotFoundException;
-use App\Core\View;
 
-$config = require __DIR__ . '/../bootstrap.php';
+declare(strict_types=1);
+
+use App\Core\Database;
+use App\Core\NotFoundException;
+use App\Core\Router;
+use App\Core\View;
+use App\Controllers\HomeController;
+use App\Repositories\CategoryRepository;
+
+$config = require __DIR__.'/../bootstrap.php';
 $router = new Router();
 $view = new View();
-$router->get('/', function () use ($view): string {
-    return  $view->render('home.tpl');
+
+$router->get('/', function () use ($view, $config): string {
+    $pdo = Database::getConnection($config);
+    $categoryRepository = new CategoryRepository($pdo);
+    $homeController = new HomeController($categoryRepository, $view, $config['latest_per_category']);
+    return $homeController->index();
 });
 
 try {
@@ -21,6 +30,6 @@ try {
 } catch (Throwable $e) {
     http_response_code(500);
     if ($config['debug']) {
-        echo '<pre>' . htmlspecialchars($e->getMessage()) . '</pre>';
+        echo '<pre>'.htmlspecialchars($e->getMessage()).'</pre>';
     }
 }

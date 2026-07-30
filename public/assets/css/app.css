@@ -101,3 +101,66 @@ h1 {
   color: #8a99a3;
   margin: 1rem 0 1.5rem;
 }
+
+.grid {
+  display: grid;
+  gap: 2.25rem 1.5rem;
+  grid-template-columns: repeat(3, 1fr);
+}
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 600px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.card__media {
+  display: block;
+  margin-bottom: 0.9rem;
+  overflow: hidden;
+}
+.card__media img {
+  aspect-ratio: 4/3;
+  object-fit: cover;
+  transition: transform 0.35s ease;
+  width: 100%;
+}
+.card:hover .card__media img {
+  transform: scale(1.04);
+}
+.card__title {
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 0.35rem;
+}
+.card__date {
+  color: #8a99a3;
+  font-size: 0.75rem;
+  margin-bottom: 0.7rem;
+}
+.card__excerpt {
+  color: #8a99a3;
+  display: -webkit-box;
+  font-size: 0.8125rem;
+  margin-bottom: 0.9rem;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 5;
+}
+
+.category-section + .category-section {
+  margin-top: 5rem;
+}
+.category-section__head {
+  align-items: baseline;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+}
+.category-section__title {
+  color: #22333f;
+}
