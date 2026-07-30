@@ -100,5 +100,12 @@ class ArticleRepository
         $statement->execute();
         return (int)$statement->fetchColumn();
     }
-    
+
+    public function incrementViews(int $articleId): void
+    {
+        $sql = 'UPDATE articles SET views_count = views_count + 1 WHERE id = :id';
+        $statement = $this->pdo->prepare($sql);
+        $statement->bindValue(':id', $articleId, PDO::PARAM_INT);
+        $statement->execute();
+    }
 }
