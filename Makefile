@@ -2,6 +2,9 @@
 export
 .PHONY: up down build ps logs sh composer-install schema seed assets
 
+.env: # Create .env file from example if it doesn't exist
+	@test -f .env || cp .env.example .env
+
 up: # Start containers
 	docker compose up -d
 
@@ -34,7 +37,7 @@ assets: # Build assets (CSS, JS, etc.)
 	docker compose exec php php bin/console.php assets:build
 
 init: # Initialize project (install dependencies, build assets, create schema, seed database)
-	@test -f .env || cp .env.example .env
+	.env
 	$(MAKE) up
 	$(MAKE) composer-install
 	$(MAKE) assets
