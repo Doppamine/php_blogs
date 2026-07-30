@@ -108,4 +108,45 @@ class ArticleRepository
         $statement->bindValue(':id', $articleId, PDO::PARAM_INT);
         $statement->execute();
     }
+
+    /**
+     * @throws DateMalformedStringException
+     */
+    public function findSimilarArticles(int $articleId, int $limit): array
+    {
+        $sql = <<<'SQL'
+        SELECT a.id,
+               a.title,
+               a.description,
+               a.image,
+               a.published_at,
+               COUNT(*) AS shared_categories
+        FROM article_category source
+        JOIN article_category other ON other.category_id = source.category_id
+        JOIN articles a ON a.id = other.article_id
+        WHERE source.article_id = :article_id
+          AND other.article_id <> :excluded_id
+        GROUP BY a.id
+        ORDER BY shared_categories DESC, a.published_at DESC, a.id DESC
+        LIMIT :limit
+        SQL;
+
+        $statement = $this->pdo->prepare($sql);
+        $statement->bindValue(':article_id', $articleId, PDO::PARAM_INT);
+        $statement->bindValue(':excluded_id', $articleId, PDO::PARAM_INT);
+        $statement->bindValue(':limit', $limit, PDO::PARAM_INT);
+        $statement->execute();
+
+        $articles = [];
+        foreach ($statement as $row) {
+            $articles[] = [
+                'id' => $row['id'],
+                'title' => $row['title'],
+                'description' => $row['description'],
+                'image' => $row['image'],
+                'date' => (new DateTimeImmutable($row['published_at']))->format('F j, Y'),
+            ];
+        }
+        return $articles;
+    }
 }

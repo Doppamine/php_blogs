@@ -14,16 +14,18 @@ class ArticleController
     private ArticleRepository $articleRepository;
     private CategoryRepository $categoryRepository;
     private View $view;
-
+    private int $similarArticles;
 
     public function __construct(
         ArticleRepository $articleRepository,
         CategoryRepository $categoryRepository,
-        View $view
+        View $view,
+        int $similarArticles
     ) {
         $this->articleRepository = $articleRepository;
         $this->categoryRepository = $categoryRepository;
         $this->view = $view;
+        $this->similarArticles = $similarArticles;
     }
 
     /**
@@ -41,11 +43,12 @@ class ArticleController
         // Increment view count for view/template as well, so that the user sees the updated count immediately
         $article['views_count']++;
         $categories = $this->categoryRepository->findByArticleId($id);
-
+        $similarArticles = $this->articleRepository->findSimilarArticles($id, $this->similarArticles);
 
         return $this->view->render('article.tpl', [
             'article' => $article,
             'categories' => $categories,
+            'similar' => $similarArticles,
         ]);
     }
 }

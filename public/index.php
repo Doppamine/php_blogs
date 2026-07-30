@@ -39,7 +39,8 @@ $router->get('/article/{id}', function (int $id) use ($view, $config): string {
     return (new ArticleController(
         new ArticleRepository($pdo),
         new CategoryRepository($pdo),
-        $view
+        $view,
+        $config['similar_articles']
     ))->show($id);
 });
 
