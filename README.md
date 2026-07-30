@@ -13,7 +13,7 @@ Docker and Docker Compose are the only requirements.
 ```bash
 git clone https://github.com/Doppamine/php_blogs.git
 cd php_blogs
-make init (or similar make command)
+make init
 ```
 
 The site will be available at `http://localhost:8080`.
