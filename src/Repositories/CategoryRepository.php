@@ -72,4 +72,12 @@ class CategoryRepository
         return array_values($categories);
     }
 
+    public function findCategoryById(int $id): ?array
+    {
+        $sql = 'SELECT id, name, description FROM categories WHERE id = :id';
+        $statement = $this->pdo->prepare($sql);
+        $statement->bindValue(':id', $id, PDO::PARAM_INT);
+        $statement->execute();
+        return $statement->fetch() ?: null;
+    }
 }

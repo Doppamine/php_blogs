@@ -194,3 +194,61 @@ h1 {
     color: $color-text;
   }
 }
+
+.category-head {
+  margin-bottom: ($space * 2);
+
+  &__title {
+    margin-bottom: ($space * 0.5);
+  }
+
+  &__description {
+    color: $color-muted;
+    max-width: 40rem;
+  }
+}
+
+.sort {
+  align-items: baseline;
+  display: flex;
+  gap: $space;
+  margin-bottom: ($space * 1.5);
+
+  &__label {
+    color: $color-muted;
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  &__link {
+    border-bottom: 1px solid transparent;
+    color: $color-muted;
+    font-size: 0.8125rem;
+
+    &--active {
+      border-bottom-color: currentColor;
+      color: $color-text;
+    }
+  }
+}
+
+.pagination {
+  display: flex;
+  gap: ($space * 0.4);
+  justify-content: center;
+  margin-top: ($space * 3);
+
+  &__link {
+    border: 1px solid $color-border;
+    color: $color-muted;
+    font-size: 0.8125rem;
+    padding: ($space * 0.35) ($space * 0.75);
+
+    &--active {
+      background: $color-accent;
+      border-color: $color-accent;
+      color: $color-inverse;
+    }
+  }
+}

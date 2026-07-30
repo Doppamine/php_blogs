@@ -2,11 +2,13 @@
 
 declare(strict_types=1);
 
+use App\Controllers\CategoryController;
 use App\Core\Database;
 use App\Core\NotFoundException;
 use App\Core\Router;
 use App\Core\View;
 use App\Controllers\HomeController;
+use App\Repositories\ArticleRepository;
 use App\Repositories\CategoryRepository;
 
 $config = require __DIR__.'/../bootstrap.php';
@@ -18,6 +20,17 @@ $router->get('/', function () use ($view, $config): string {
     $categoryRepository = new CategoryRepository($pdo);
     $homeController = new HomeController($categoryRepository, $view, $config['latest_per_category']);
     return $homeController->index();
+});
+
+$router->get('/category/{id}', function (int $id) use ($view, $config): string {
+    $pdo = Database::getConnection($config);
+
+    return (new CategoryController(
+        new CategoryRepository($pdo),
+        new ArticleRepository($pdo),
+        $view,
+        $config['articles_per_page']
+    ))->show($id);
 });
 
 try {
