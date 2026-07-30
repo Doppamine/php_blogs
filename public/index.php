@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Controllers\ArticleController;
 use App\Controllers\CategoryController;
 use App\Core\Database;
 use App\Core\NotFoundException;
@@ -30,6 +31,15 @@ $router->get('/category/{id}', function (int $id) use ($view, $config): string {
         new ArticleRepository($pdo),
         $view,
         $config['articles_per_page']
+    ))->show($id);
+});
+
+$router->get('/article/{id}', function (int $id) use ($view, $config): string {
+    $pdo = Database::getConnection($config);
+    return (new ArticleController(
+        new ArticleRepository($pdo),
+        new CategoryRepository($pdo),
+        $view
     ))->show($id);
 });
 

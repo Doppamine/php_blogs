@@ -28,13 +28,28 @@ class ArticleRepository
         return isset(self::AVAILABLE_SORTS[$sort]) ? $sort : 'date';
     }
 
+    /**
+     * @throws DateMalformedStringException
+     */
     public function findArticleById(int $id): ?array
     {
         $sql = 'SELECT * FROM articles WHERE id = :id';
         $statement = $this->pdo->prepare($sql);
         $statement->bindValue(':id', $id, PDO::PARAM_INT);
         $statement->execute();
-        return $statement->fetch() ?: null;
+        $row = $statement->fetch();
+        if ($row === false) {
+            return null;
+        }
+        return [
+            'id' => $row['id'],
+            'title' => $row['title'],
+            'description' => $row['description'],
+            'paragraphs' => preg_split('/\n\s*\n/', trim($row['content'])),
+            'image' => $row['image'],
+            'views_count' => $row['views_count'],
+            'date' => (new DateTimeImmutable($row['published_at']))->format('F j, Y'),
+        ];
     }
 
     /**
@@ -85,4 +100,5 @@ class ArticleRepository
         $statement->execute();
         return (int)$statement->fetchColumn();
     }
+    
 }

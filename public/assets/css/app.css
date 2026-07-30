@@ -215,3 +215,32 @@ h1 {
   border-color: #3d5a6c;
   color: #ffffff;
 }
+
+.article {
+  margin: 0 auto;
+  max-width: 46rem;
+}
+.article__image {
+  aspect-ratio: 16/9;
+  margin-bottom: 1.5rem;
+  object-fit: cover;
+  width: 100%;
+}
+.article__title {
+  margin-bottom: 0.5rem;
+}
+.article__meta {
+  color: #8a99a3;
+  font-size: 0.8125rem;
+  margin-bottom: 1.5rem;
+}
+.article__category {
+  border-bottom: 1px solid currentColor;
+}
+.article__lead {
+  font-size: 1.0625rem;
+  margin-bottom: 1.5rem;
+}
+.article__body p + p {
+  margin-top: 1rem;
+}

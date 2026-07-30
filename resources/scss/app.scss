@@ -252,3 +252,38 @@ h1 {
     }
   }
 }
+
+.article {
+  margin: 0 auto;
+  max-width: 46rem;
+
+  &__image {
+    aspect-ratio: 16 / 9;
+    margin-bottom: ($space * 1.5);
+    object-fit: cover;
+    width: 100%;
+  }
+
+  &__title {
+    margin-bottom: ($space * 0.5);
+  }
+
+  &__meta {
+    color: $color-muted;
+    font-size: 0.8125rem;
+    margin-bottom: ($space * 1.5);
+  }
+
+  &__category {
+    border-bottom: 1px solid currentColor;
+  }
+
+  &__lead {
+    font-size: 1.0625rem;
+    margin-bottom: ($space * 1.5);
+  }
+
+  &__body p + p {
+    margin-top: $space;
+  }
+}

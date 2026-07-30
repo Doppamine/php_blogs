@@ -30,6 +30,7 @@ class CategoryRepository
                    ranked.title,
                    ranked.description,
                    ranked.image,
+                   ranked.views_count,
                    ranked.published_at
             FROM (
                 SELECT ac.category_id,
@@ -37,6 +38,7 @@ class CategoryRepository
                        a.title,
                        a.description,
                        a.image,
+                       a.views_count,
                        a.published_at,
                        ROW_NUMBER() OVER (
                            PARTITION BY ac.category_id
@@ -66,6 +68,7 @@ class CategoryRepository
                 'title' => $row['title'],
                 'description' => $row['description'],
                 'image' => $row['image'],
+                'views_count' => $row['views_count'],
                 'date' => (new DateTimeImmutable($row['published_at']))->format('F j, Y'),
             ];
         }
@@ -79,5 +82,20 @@ class CategoryRepository
         $statement->bindValue(':id', $id, PDO::PARAM_INT);
         $statement->execute();
         return $statement->fetch() ?: null;
+    }
+
+    public function findByArticleId(int $articleId): array
+    {
+        $sql = <<<SQL
+            SELECT c.id, c.name
+            FROM categories c
+            JOIN article_category ac ON ac.category_id = c.id
+            WHERE ac.article_id = :article_id
+            ORDER BY c.name
+            SQL;
+        $statement = $this->pdo->prepare($sql);
+        $statement->bindValue(':article_id', $articleId, PDO::PARAM_INT);
+        $statement->execute();
+        return $statement->fetchAll();
     }
 }
