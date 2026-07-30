@@ -32,3 +32,12 @@ seed: # Seed database with initial fake data
 
 assets: # Build assets (CSS, JS, etc.)
 	docker compose exec php php bin/console.php assets:build
+
+init: # Initialize project (install dependencies, build assets, create schema, seed database)
+	@test -f .env || cp .env.example .env
+	$(MAKE) up
+	$(MAKE) composer-install
+	$(MAKE) assets
+	$(MAKE) schema
+	$(MAKE) seed
+	@echo "Ready: http://localhost:$(APP_PORT)"
